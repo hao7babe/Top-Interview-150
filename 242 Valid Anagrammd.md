@@ -1,12 +1,12 @@
-# 344. Reverse String
+# 242. Valid Anagram
 
 Difficulty: easy
-Link: https://leetcode.com/problems/reverse-string
+Link: https://leetcode.com/problems/valid-anagram
 Topic: String
 
 ### Problem Analysis
 
-The problem asks us to determine if two strings are anagrams of each other. Two strings are considered anagrams if they contain the same characters in the same frequency but potentially in a different order.
+The problem requires us to determine if two strings are anagrams of each other. Two strings are considered anagrams if they contain the exact same characters in the exact same frequency, but the order of the characters can be different.
 
 **Examples**:
 
@@ -17,23 +17,25 @@ The problem asks us to determine if two strings are anagrams of each other. Two 
 
 ### Approach
 
-1. **Sorting**:
+To solve this problem efficiently, we can use the following approach:
+
+1. **Frequency Count (Optimal Solution)**:
+    - Use a dictionary to count the frequency of each character in both strings.
+    - Compare the frequency counts for both strings. If they match for all characters, the strings are anagrams.
+2. **Sorting (Alternative Solution)**:
     - Sort both strings and compare them. If the sorted versions of the strings are identical, then the strings are anagrams.
-    - This approach is straightforward but less efficient in terms of time complexity due to the sorting step.
-2. **Frequency Count (Optimal Solution)**:
-    - Use a dictionary (or an array of size 26 if the strings contain only lowercase English letters) to count the frequency of each character in both strings.
-    - Compare the frequency counts. If they match for all characters, the strings are anagrams.
+    - This method is straightforward but less efficient than the frequency count approach.
 
 ### Time and Space Complexity
 
-- **Sorting Approach**:
-    - **Time Complexity**: O(n log n), where n is the length of the strings (assuming the strings are of the same length).
-    - **Space Complexity**: O(1) or O(n) depending on the implementation of the sort (if in-place or not).
 - **Frequency Count Approach**:
-    - **Time Complexity**: O(n), where n is the length of the strings.
-    - **Space Complexity**: O(1) (if using an array of size 26) or O(n) (if using a dictionary, but since the space is bounded by the number of distinct characters, it's considered O(1) for fixed alphabets).
+    - **Time Complexity**: O(n), where n is the length of the strings (assuming the strings are of the same length).
+    - **Space Complexity**: O(1) if we consider the number of possible characters (26 lowercase letters) as constant.
+- **Sorting Approach**:
+    - **Time Complexity**: O(n log n), where n is the length of the strings.
+    - **Space Complexity**: O(n), due to the space required to store the sorted versions of the strings.
 
-Given these considerations, the **Frequency Count Approach** is more efficient and is generally the preferred method.
+Given these considerations, the **Frequency Count Approach** is more efficient and is generally preferred.
 
 ### Code Implementation (Frequency Count Approach)
 
@@ -69,6 +71,7 @@ def is_anagram(s, t):
 1. **Different Lengths**: If the two strings have different lengths, they can't be anagrams.
 2. **Empty Strings**: Two empty strings should be considered anagrams.
 3. **Identical Strings**: A string should be an anagram of itself.
+4. **Case Sensitivity**: The solution assumes that the problem is case-sensitive unless specified otherwise.
 
 ### Unit Test
 
@@ -97,14 +100,19 @@ class TestIsAnagram(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(argv=['first-arg-is-ignored'], exit=False)
+
 ```
 
 ### Alternative Approach (Sorting)
 
 ```python
 def is_anagram(s, t):
-    # Step 1: Sort both strings
+    # Step 1: Sort both strings and compare
     return sorted(s) == sorted(t)
+
 ```
 
-While the sorting method is simpler to implement, the **Frequency Count Approach** is generally better in terms of performance, especially for larger strings. The sorting approach, while easy to understand, has a higher time complexity of O(n log n) compared to the O(n) of the frequency count method.
+### Summary
+
+- The **Frequency Count Approach** is optimal due to its O(n) time complexity and O(1) space complexity when considering a fixed character set.
+- The **Sorting Approach** is simpler but less efficient with a time complexity of O(n log n). This approach can be used for smaller strings or when simplicity is more important than performance.
